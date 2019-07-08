@@ -33,10 +33,11 @@ For more detailed information you can navigate on [link](https://dietpi.com/phpb
 1. Configure static IP for each node [link](https://dietpi.com/phpbb/viewtopic.php?f=8&t=14)
 2. Configure hostname. For example for master node, echo master01>/etc/hostname.
 3. Conficure hosts file. For example for master node :
-        
-        127.0.0.1    localhost.localdomain localhost
-        127.0.1.1    master01
-        192.168.1.200 master01.home.local
+```sh 
+127.0.0.1    localhost.localdomain localhost
+127.0.1.1    master01
+192.168.1.200 master01.home.local
+```
 
 ## k3s installation
   
