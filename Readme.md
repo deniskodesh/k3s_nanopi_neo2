@@ -76,22 +76,8 @@ For more detailed information you can navigate on [link](https://dietpi.com/phpb
 ## Metallb installation
   
   1. Controller and speaker installation, kubectl apply -f https://raw.githubusercontent.com/google/metallb/v0.7.3/manifests/metallb.yaml
-  2. Config map, be aware you need define your ip range, START_IP and END_IP
-        cat <<EOF | kubectl apply -f -
-        apiVersion: v1
-        kind: ConfigMap
-        metadata:
-         namespace: metallb-system
-        name: config
-        data:
-         config: |
-          address-pools:
-          - name: my-ip-space
-            protocol: layer2
-            addresses:
-          - START_IP-END_IP
-        EOF
-   3. Verify working state of metallb, create nginx svc with type LoadBalancer kubectl apply -f https://raw.githubusercontent.com/google/metallb/v0.7.3/manifests/tutorial-2.yaml
+  2. [Config map](), be aware you need define your ip range, START_IP and END_IP
+  3. Verify working state of metallb, create nginx svc with type LoadBalancer kubectl apply -f https://raw.githubusercontent.com/google/metallb/v0.7.3/manifests/tutorial-2.yaml
 
 ### Note
   
