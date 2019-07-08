@@ -95,7 +95,7 @@ For more detailed information you can navigate on [link](https://dietpi.com/phpb
 ## MQTT installation
 
   1. Add helm repo, helm repo add smizy https://smizy.github.io/charts
-  2. Download config file 
+  2. Download config file https://raw.githubusercontent.com/deniskodesh/k3s_nanopi_neo2/master/mqtt/mosquitto-values.yaml
   3. Install MQTT helm install smizy/mosquitto --name mqtt  \
                     --set image=eclipse-mosquitto:1.6.3 \
                     --set imagePullPolicy=Always \
