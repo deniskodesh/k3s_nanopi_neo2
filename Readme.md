@@ -43,8 +43,14 @@ For more detailed information you can navigate on [link](https://dietpi.com/phpb
   
 ### Master node
   
-  1. Master node installation, curl -sfL https://get.k3s.io | sh -
-  2. Check for Ready node, takes maybe 30 seconds, k3s kubectl get node
+  1. Master node installation, 
+  ```sh 
+  curl -sfL https://get.k3s.io | sh - 
+  ```
+  2. Check for Ready node, takes maybe 30 seconds, 
+  ```sh 
+  k3s kubectl get node
+  ```
 
 ### Agent node
 
