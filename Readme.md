@@ -76,12 +76,32 @@ For more detailed information you can navigate on [link](https://dietpi.com/phpb
 ## Metallb installation
   
   1. Controller and speaker installation, kubectl apply -f https://raw.githubusercontent.com/google/metallb/v0.7.3/manifests/metallb.yaml
-  2. [Config map](), be aware you need define your ip range, START_IP and END_IP
+  2. [Config map](https://raw.githubusercontent.com/deniskodesh/k3s_nanopi_neo2/master/metallb/cm.yaml), be aware you need define your ip range, START_IP and END_IP
   3. Verify working state of metallb, create nginx svc with type LoadBalancer kubectl apply -f https://raw.githubusercontent.com/google/metallb/v0.7.3/manifests/tutorial-2.yaml
 
 ### Note
   
   More detailed information regarding metallb you can find [link](https://metallb.universe.tf/installation/)
+
+## Home assistant installation
+
+  1. helm install --name ha stable/home-assistant --set image.repository=homeassistant/raspberrypi3-64-homeassistant --set image.tag=0.95.4 --set persistence.storageClass=local-path --set configurator.enable=true
+  2. Change type of svc homeassistant ClusterIP on LoadBalancer
+
+  ### Note
+  
+  More detailed information regarding homeassisntant installation  you can find [link](https://github.com/helm/charts/tree/master/stable/home-assistant)
+
+## MQTT installation
+
+  1. Add helm repo, helm repo add smizy https://smizy.github.io/charts
+  2. Download config file 
+  3. Install MQTT helm install smizy/mosquitto --name mqtt  \
+                    --set image=eclipse-mosquitto:1.6.3 \
+                    --set imagePullPolicy=Always \
+                    --set persistence.enabled=true \
+                    --set persistence.storageClass=local-path \
+                    -f mosquitto-values.yaml  
 
 
 
