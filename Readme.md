@@ -38,7 +38,31 @@ For more detailed information you can navigate on [link](https://dietpi.com/phpb
         127.0.1.1    master01
         192.168.1.200 master01.home.local
 
-## K3s installation
+## k3s installation
+  
+### Master node
+  
+  1. Master node installation, curl -sfL https://get.k3s.io | sh -
+  2. Check for Ready node, takes maybe 30 seconds, k3s kubectl get node
+
+### Agent node
+
+  1. For agent installation need token to join in cluster on master node run cat /var/lib/rancher/k3s/server/node-token
+  2. Join agent in cluster url -sfL https://get.k3s.io |K3S_URL=https://MASTER_IP:6443 K3S_TOKEN=TOKEN sh -
+  3. Check for Ready node, takes maybe 60 seconds, k3s kubectl get node
+
+### Save config 
+  
+  1. On master node in home directory create .kube directory
+  2. Copy config file to .kube directory cp /etc/rancher/k3s/k3s.yaml ~/.kube/config
+
+### Note
+  
+  More detailed information regarding installation, update or delete cluster you can find [link](https://github.com/rancher/k3s)
+
+## Helm installation
+
+
 
 
 
