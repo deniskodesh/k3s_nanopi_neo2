@@ -93,7 +93,7 @@ For more detailed information you can navigate on [link](https://dietpi.com/phpb
         EOF
    3. Verify working state of metallb, create nginx svc with type LoadBalancer kubectl apply -f https://raw.githubusercontent.com/google/metallb/v0.7.3/manifests/tutorial-2.yaml
 
-   ### Note
+### Note
   
   More detailed information regarding metallb you can find [link](https://metallb.universe.tf/installation/)
 
