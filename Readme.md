@@ -1,6 +1,6 @@
 ## Overview
 
-The goal of [this project][k3s_nanopi_neo2] is to provide an simple instruction for spin up k3s cluster for home automation
+The goal of [this project] [k3s_nanopi_neo2] is to provide an simple instruction for spin up k3s cluster for home automation
 
 ## Requirements 
 
