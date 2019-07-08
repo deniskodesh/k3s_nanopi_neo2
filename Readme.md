@@ -31,7 +31,10 @@ For more detailed information you can navigate on [link](https://dietpi.com/phpb
 ## Prerequisites
 
 1. Configure static IP for each node [link](https://dietpi.com/phpbb/viewtopic.php?f=8&t=14)
-2. Configure hostname. For example for master node, echo master01>/etc/hostname.
+2. Configure hostname. For example for master node 
+```sh 
+echo master01>/etc/hostname.
+```
 3. Conficure hosts file. For example for master node :
 ```sh 
 127.0.0.1    localhost.localdomain localhost
@@ -43,20 +46,29 @@ For more detailed information you can navigate on [link](https://dietpi.com/phpb
   
 ### Master node
   
-  1. Master node installation, 
+  1. Master node installation
   ```sh 
   curl -sfL https://get.k3s.io | sh - 
   ```
-  2. Check for Ready node, takes maybe 30 seconds, 
+  2. Check for Ready node, takes maybe 30 seconds 
   ```sh 
   k3s kubectl get node
   ```
 
 ### Agent node
 
-  1. For agent installation need token to join in cluster on master node run cat /var/lib/rancher/k3s/server/node-token
-  2. Join agent in cluster url -sfL https://get.k3s.io |K3S_URL=https://MASTER_IP:6443 K3S_TOKEN=TOKEN sh -
-  3. Check for Ready node, takes maybe 60 seconds, k3s kubectl get node
+1. For agent installation need token to join in cluster on master node run 
+```sh 
+  cat /var/lib/rancher/k3s/server/node-token
+```
+2. Join agent in cluster 
+```sh 
+curl -sfL https://get.k3s.io |K3S_URL=https://MASTER_IP:6443 K3S_TOKEN=TOKEN sh -
+```
+3. Check for Ready node, takes maybe 60 seconds, 
+```ssh 
+k3s kubectl get node
+```
 
 ### Save config 
   
