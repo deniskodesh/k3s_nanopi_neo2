@@ -33,7 +33,7 @@ For more detailed information you can navigate on [link](https://dietpi.com/phpb
 1. Configure static IP for each node [link](https://dietpi.com/phpbb/viewtopic.php?f=8&t=14)
 2. Configure hostname. For example for master node 
 ```sh 
-echo master01>/etc/hostname.
+echo master01 >/etc/hostname.
 ```
 3. Conficure hosts file. For example for master node :
 ```sh 
@@ -73,7 +73,9 @@ k3s kubectl get node
 ### Save config 
   
   1. On master node in home directory create .kube directory
-  2. Copy config file to .kube directory cp /etc/rancher/k3s/k3s.yaml ~/.kube/config
+  2. Copy config file to .kube directory 
+  ```ssh cp /etc/rancher/k3s/k3s.yaml ~/.kube/config
+  ```
 
 ### Note
   
@@ -81,47 +83,79 @@ k3s kubectl get node
 
 ## Helm installation (in our case it will install in master node)
   
-  1. Download arm helm package, curl -O https://get.helm.sh/helm-v2.14.1-linux-arm64.tar.gz
-  2. Untar it, tar -zxvf helm-v2.14.1-linux-arm64.tar.gz
-  3. Move binary, mv linux-arm64/helm /usr/local/bin/helm
-  4. Create service account for tiller, kubectl create -f https://raw.githubusercontent.com/deniskodesh/k3s_nanopi_neo2/master/helm/service_account.yaml
-  5. Install tiller to your running k3s cluster and set up local configuration, helm init --service-account tiller --history-max 200 --tiller-image=jessestuart/tiller:latest
- 
+1. Download arm helm package 
+```ssh
+  curl -O https://get.helm.sh/helm-v2.14.1-linux-arm64.tar.gz
+```
+2. Untar it  
+```ssh
+tar -zxvf helm-v2.14.1-linux-arm64.tar.gz
+```
+3. Move binary 
+```ssh
+mv linux-arm64/helm /usr/local/bin/helm
+```
+4. Create service account for tiller 
+```ssh
+kubectl create -f https://raw.githubusercontent.com/deniskodesh/k3s_nanopi_neo2/master/helm/service_account.yaml
+```
+5. Install tiller to your running k3s cluster and set up local configuration 
+```ssh
+helm init --service-account tiller --history-max 200 --tiller-image=jessestuart/tiller:latest
+``` 
 ## Storage class installation
 
-  1. Create storage class,  kubectl create -f https://raw.githubusercontent.com/deniskodesh/k3s_nanopi_neo2/master/storageclass/storageclass.yaml
-  2. Verify it, kubectl get storageclass
-
+1. Create storage class 
+```ssh
+kubectl create -f https://raw.githubusercontent.com/deniskodesh/k3s_nanopi_neo2/master/storageclass/storageclass.yaml
+```
+2. Verify it 
+```ssh
+kubectl get storageclass
+```
 ## Metallb installation
   
-  1. Controller and speaker installation, kubectl apply -f https://raw.githubusercontent.com/google/metallb/v0.7.3/manifests/metallb.yaml
-  2. [Config map](https://raw.githubusercontent.com/deniskodesh/k3s_nanopi_neo2/master/metallb/cm.yaml), be aware you need define your ip range, START_IP and END_IP
-  3. Verify working state of metallb, create nginx svc with type LoadBalancer kubectl apply -f https://raw.githubusercontent.com/google/metallb/v0.7.3/manifests/tutorial-2.yaml
-
+1. Controller and speaker installation
+```ssh  
+kubectl apply -f https://raw.githubusercontent.com/google/metallb/v0.7.3/manifests/metallb.yaml
+```
+2. [Config map](https://raw.githubusercontent.com/deniskodesh/k3s_nanopi_neo2/master/metallb/cm.yaml) be aware you need define your ip range, START_IP and END_IP
+3. Verify working state of metallb, create nginx svc with type LoadBalancer 
+```ssh
+kubectl apply -f https://raw.githubusercontent.com/google/metallb/v0.7.3/manifests/tutorial-2.yaml
+```
 ### Note
   
   More detailed information regarding metallb you can find [link](https://metallb.universe.tf/installation/)
 
 ## Home assistant installation
 
-  1. helm install --name ha stable/home-assistant --set image.repository=homeassistant/raspberrypi3-64-homeassistant --set image.tag=0.95.4 --set persistence.storageClass=local-path --set configurator.enable=true
-  2. Change type of svc homeassistant ClusterIP on LoadBalancer
+1. HA helm installation
+```ssh
+helm install --name ha stable/home-assistant --set image.repository=homeassistant/raspberrypi3-64-homeassistant --set image.tag=0.95.4 --set persistence.storageClass=local-path --set configurator.enable=true
+```
+2. Change type of svc homeassistant ClusterIP on LoadBalancer
 
-  ### Note
+### Note
   
-  More detailed information regarding homeassisntant installation  you can find [link](https://github.com/helm/charts/tree/master/stable/home-assistant)
+More detailed information regarding homeassisntant installation  you can find [link](https://github.com/helm/charts/tree/master/stable/home-assistant)
 
 ## MQTT installation
 
-  1. Add helm repo, helm repo add smizy https://smizy.github.io/charts
-  2. Download config file https://raw.githubusercontent.com/deniskodesh/k3s_nanopi_neo2/master/mqtt/mosquitto-values.yaml
-  3. Install MQTT helm install smizy/mosquitto --name mqtt  \
+1. Add helm repo 
+```ssh
+helm repo add smizy https://smizy.github.io/charts
+```
+2. Download config file https://raw.githubusercontent.com/deniskodesh/k3s_nanopi_neo2/master/mqtt/mosquitto-values.yaml
+3. Install 
+```ssh
+MQTT helm install smizy/mosquitto --name mqtt  \
                     --set image=eclipse-mosquitto:1.6.3 \
                     --set imagePullPolicy=Always \
                     --set persistence.enabled=true \
                     --set persistence.storageClass=local-path \
                     -f mosquitto-values.yaml  
-
+```
 
 
 
