@@ -13,12 +13,12 @@ The goal of [this project][k3s_nanopi_neo2] is to provide an simple instruction 
 
 ## OS installation
 
-Download DietPi OS [image] (https://dietpi.com/downloads/images/DietPi_NanoPiNEO2-ARMv8-Stretch.7z)
+Download DietPi OS [image](https://dietpi.com/downloads/images/DietPi_NanoPiNEO2-ARMv8-Stretch.7z)
 
-## H2 Write to SD card using Windows
+## Write to SD card using Windows
 1. Extract the Linux image. Insert a TF card into a Windows PC and run the win32diskimager utility as administrator. On the utility's main window select your TF card's drive, the wanted image file and click on "write" to start flashing the TF card.
 
-## H2 Write to SD card using Linux
+## Write to SD card using Linux
 
 1. Find the device (eg: /dev/sdb1) you need to write to by using blkid or mount.
 2. Double check that you have the correct dev path for your SD card (eg: /dev/sdb1).
@@ -26,7 +26,7 @@ Download DietPi OS [image] (https://dietpi.com/downloads/images/DietPi_NanoPiNEO
 4. Write the image using dd if=/path/to/DietPi_vXX.img of=/dev/sdb.
 
 
-For more detailed information you can navigate on [link] https://dietpi.com/phpbb/viewtopic.php?f=8&t=9#p9
+For more detailed information you can navigate on [link]https://dietpi.com/phpbb/viewtopic.php?f=8&t=9#p9
 
 
 
