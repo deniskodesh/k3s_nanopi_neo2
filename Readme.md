@@ -60,7 +60,11 @@ For more detailed information you can navigate on [link](https://dietpi.com/phpb
   
   More detailed information regarding installation, update or delete cluster you can find [link](https://github.com/rancher/k3s)
 
-## Helm installation
+## Helm installation (in our case it will install in master node)
+  
+  1. Download arm helm package curl -O https://get.helm.sh/helm-v2.14.1-linux-arm64.tar.gz
+  2. Untar it tar -zxvf helm-v2.14.1-linux-arm64.tar.gz
+  3. Move binary mv linux-arm64/helm /usr/local/bin/helm
 
 
 
