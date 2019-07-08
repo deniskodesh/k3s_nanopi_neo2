@@ -74,8 +74,9 @@ k3s kubectl get node
   
   1. On master node in home directory create .kube directory
   2. Copy config file to .kube directory 
-  ```ssh cp /etc/rancher/k3s/k3s.yaml ~/.kube/config
-  ```
+```ssh 
+cp /etc/rancher/k3s/k3s.yaml ~/.kube/config
+```
 
 ### Note
   
@@ -85,7 +86,7 @@ k3s kubectl get node
   
 1. Download arm helm package 
 ```ssh
-  curl -O https://get.helm.sh/helm-v2.14.1-linux-arm64.tar.gz
+curl -O https://get.helm.sh/helm-v2.14.1-linux-arm64.tar.gz
 ```
 2. Untar it  
 ```ssh
