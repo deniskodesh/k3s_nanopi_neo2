@@ -68,6 +68,34 @@ For more detailed information you can navigate on [link](https://dietpi.com/phpb
   4. Create service account for tiller, kubectl create -f https://raw.githubusercontent.com/deniskodesh/k3s_nanopi_neo2/master/helm/service_account.yaml
   5. Install tiller to your running k3s cluster and set up local configuration, helm init --service-account tiller --history-max 200 --tiller-image=jessestuart/tiller:latest
  
+## Storage class installation
+
+  1. Create storage class,  kubectl create -f https://raw.githubusercontent.com/deniskodesh/k3s_nanopi_neo2/master/storageclass/storageclass.yaml
+  2. Verify it, kubectl get storageclass
+
+## Metallb installation
+  
+  1. Controller and speaker installation, kubectl apply -f https://raw.githubusercontent.com/google/metallb/v0.7.3/manifests/metallb.yaml
+  2. Config map, be aware you need define your ip range, START_IP and END_IP
+        cat <<EOF | kubectl apply -f -
+        apiVersion: v1
+        kind: ConfigMap
+        metadata:
+         namespace: metallb-system
+        name: config
+        data:
+         config: |
+          address-pools:
+          - name: my-ip-space
+            protocol: layer2
+            addresses:
+          - START_IP-END_IP
+        EOF
+   3. Verify working state of metallb, create nginx svc with type LoadBalancer kubectl apply -f https://raw.githubusercontent.com/google/metallb/v0.7.3/manifests/tutorial-2.yaml
+
+   ### Note
+  
+  More detailed information regarding metallb you can find [link](https://metallb.universe.tf/installation/)
 
 
 
