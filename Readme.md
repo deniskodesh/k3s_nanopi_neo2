@@ -62,9 +62,12 @@ For more detailed information you can navigate on [link](https://dietpi.com/phpb
 
 ## Helm installation (in our case it will install in master node)
   
-  1. Download arm helm package curl -O https://get.helm.sh/helm-v2.14.1-linux-arm64.tar.gz
-  2. Untar it tar -zxvf helm-v2.14.1-linux-arm64.tar.gz
-  3. Move binary mv linux-arm64/helm /usr/local/bin/helm
+  1. Download arm helm package, curl -O https://get.helm.sh/helm-v2.14.1-linux-arm64.tar.gz
+  2. Untar it, tar -zxvf helm-v2.14.1-linux-arm64.tar.gz
+  3. Move binary, mv linux-arm64/helm /usr/local/bin/helm
+  4. Create service account for tiller, kubectl create -f https://raw.githubusercontent.com/deniskodesh/k3s_nanopi_neo2/master/helm/service_account.yaml
+  5. Install tiller to your running k3s cluster and set up local configuration, helm init --service-account tiller --history-max 200 --tiller-image=jessestuart/tiller:latest
+ 
 
 
 
