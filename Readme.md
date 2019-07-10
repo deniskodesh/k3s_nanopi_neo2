@@ -48,7 +48,7 @@ echo master01 >/etc/hostname.
   
   1. Master node installation
   ```sh 
-  curl -sfL https://get.k3s.io | sh - 
+  curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="server --no-deploy traefik" sh -s -
   ```
   2. Check for Ready node, takes maybe 30 seconds 
   ```sh 
@@ -129,7 +129,7 @@ kubectl apply -f https://raw.githubusercontent.com/google/metallb/v0.7.3/manifes
   
   More detailed information regarding metallb you can find [link](https://metallb.universe.tf/installation/)
 
-## Home assistant installation
+## Home Assistant installation
 
 1. HA helm installation
 ```ssh
@@ -141,21 +141,76 @@ helm install --name ha stable/home-assistant --set image.repository=homeassistan
   
 More detailed information regarding homeassisntant installation  you can find [link](https://github.com/helm/charts/tree/master/stable/home-assistant)
 
+### Example configuration.yaml
+```yaml
+#Cloud_Native_Computing_Odesa_Meetup_#6
+mqtt:
+  broker: 192.168.2.243
+  port: 1883
+  username: test
+  password: test
+
+switch:
+  - platform: mqtt
+    name: meetup_sw
+    state_topic: "stat/sonoff/POWER"
+    command_topic: "cmnd/sonoff/power"
+    payload_on: "ON"
+    payload_off: "OFF"
+
+
+sensor:
+
+  - platform: mqtt
+    state_topic: "tele/sonoff/SENSOR"
+    name: "meetup_humidity"
+    unit_of_measurement: "%"
+    value_template: "{{ value_json['AM2301'].Humidity }}"
+
+  - platform: mqtt
+    state_topic: "tele/sonoff/SENSOR"
+    name: "meetup_temp"
+    unit_of_measurement: "C"
+    value_template: "{{ value_json['AM2301'].Temperature }}"
+      - platform: mqtt
+    state_topic: "indoor/dist"
+    name: "meetup_distance"
+    unit_of_measurement: "cm"
+
+```
+
+## Ingress installation
+
+1. Ingress controller
+
+2. Ingress rule for Home Assistant
+
+```ssh
+cat <<EOF | kubectl create -f -
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: ha
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - http:
+  - host: ha.home.local
+      paths:
+      - path: /
+        backend:
+          serviceName: ha-home-assistant
+          servicePort: 80
+EOF
+```
+
 ## MQTT installation
 
-1. Add helm repo 
+1. Install MQTT
 ```ssh
-helm repo add smizy https://smizy.github.io/charts
-```
-2. Download config file https://raw.githubusercontent.com/deniskodesh/k3s_nanopi_neo2/master/mqtt/mosquitto-values.yaml
-3. Install MQTT
-```ssh
-helm install smizy/mosquitto --name mqtt  \
-                    --set image=eclipse-mosquitto:1.6.3 \
-                    --set imagePullPolicy=Always \
-                    --set persistence.enabled=true \
-                    --set persistence.storageClass=local-path \
-                    -f mosquitto-values.yaml  
+kubectl run mqtt --image=eclipse-mosquitto:1.6.3 --port=1833
+kubectl expose deployment nginx --target-port=1883 --port=1883 --type=LoadBalancer
 ```
 
 

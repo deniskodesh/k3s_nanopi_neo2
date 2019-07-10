@@ -1,0 +1,219 @@
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: Home
+  # Location required to calculate the time the sun rises and sets
+  latitude: 0
+  longitude: 0
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: 0
+  # metric for Metric, imperial for Imperial
+  unit_system: metric
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: UTC
+  # Customization file
+  customize: !include customize.yaml
+
+camera:
+  - platform: ffmpeg
+    name: Kitchen_Camera
+    input: -rtsp_transport tcp -i rtsp://192.168.1.104:554/ch0_0.h264
+
+  - platform: ffmpeg
+    name: Camera1
+    input: -rtsp_transport tcp -i rtsp://viewer:sennheiser1020.@192.168.1.120:554/cam/realmonitor?channel=1&subtype=0
+
+  - platform: ffmpeg
+    name: Camera2
+    input: -rtsp_transport tcp -i rtsp://viewer:sennheiser1020.@192.168.1.121:554/cam/realmonitor?channel=1&subtype=0
+
+  - platform: ffmpeg
+    name: Camera3
+    input: -rtsp_transport tcp -i rtsp://viewer:sennheiser1020.@192.168.1.122:554/cam/realmonitor?channel=1&subtype=0
+
+  - platform: ffmpeg
+    name: Camera4
+    input: -rtsp_transport tcp -i rtsp://viewer:sennheiser1020.@192.168.1.123:554/cam/realmonitor?channel=1&subtype=0
+
+  - platform: ffmpeg
+    name: Camera5
+    input: -rtsp_transport tcp -i rtsp://viewer:sennheiser1020.@192.168.1.124:554/cam/realmonitor?channel=1&subtype=0
+
+sensor:
+
+  - platform: mqtt
+    state_topic: "/Attic/Temperature"
+    name: "Attic_Temp"
+    unit_of_measurement: "C"
+
+  - platform: mqtt
+    state_topic: "/Attic/Humidity"
+    name: "Attic_Humidity"
+    unit_of_measurement: "%"
+
+  - platform: mqtt
+    state_topic: "tele/Kitchen/SENSOR"
+    name: "Kitchen_Humidity"
+    unit_of_measurement: "%"
+    value_template: "{{ value_json['AM2301'].Humidity }}"
+
+  - platform: mqtt
+    state_topic: "tele/Kitchen/SENSOR"
+    name: "Kitchen_Temp"
+    unit_of_measurement: "C"
+    value_template: "{{ value_json['AM2301'].Temperature }}"
+
+  - platform: mqtt
+    state_topic: "tele/gas_boiler/SENSOR"
+    name: "Gas_Boiler_supply"
+    unit_of_measurement: "C"
+    value_template: "{{ value_json['DS18B20-1'].Temperature }}"
+
+  - platform: mqtt
+    state_topic: "tele/gas_boiler/SENSOR"
+    name: "Gas_Boiler_return flow"
+    unit_of_measurement: "C"
+    value_template: "{{ value_json['DS18B20-2'].Temperature }}"
+
+  - platform: mqtt
+    state_topic: "tele/Attic/SENSOR"
+    name: "Attic_Temp"
+    unit_of_measurement: "C"
+    value_template: "{{ value_json['AM2301'].Temperature }}"
+
+  - platform: mqtt
+    state_topic: "tele/Attic/SENSOR"
+    name: "Attic_Humidity"
+    unit_of_measurement: "%"
+    value_template: "{{ value_json['AM2301'].Humidity }}"
+
+  - platform: mqtt
+    state_topic: "tele/Hall/SENSOR"
+    name: "Hall_Temp"
+    unit_of_measurement: "C"
+    value_template: "{{ value_json['AM2301'].Temperature }}"
+
+  - platform: mqtt
+    state_topic: "tele/Hall/SENSOR"
+    name: "Hall_Humidity"
+    unit_of_measurement: "%"
+    value_template: "{{ value_json['AM2301'].Humidity }}"
+
+  - platform: mqtt
+    state_topic: "tele/MeteoSt/SENSOR"
+    name: "Meteo_Station_Temperature_Inside"
+    unit_of_measurement: "C"
+    value_template: "{{ value_json['DS18B20-1'].Temperature }}"
+
+  - platform: mqtt
+    state_topic: "tele/MeteoSt/SENSOR"
+    name: "Meteo_Station_Temperature_Outside_DS18B20"
+    unit_of_measurement: "C"
+    value_template: "{{ value_json['DS18B20-2'].Temperature }}"
+
+  - platform: mqtt
+    state_topic: "tele/MeteoSt/SENSOR"
+    name: "Meteo_Station_Temperature_Outside_BME280"
+    unit_of_measurement: "C"
+    value_template: "{{ value_json['BME280'].Temperature }}"
+
+  - platform: mqtt
+    state_topic: "tele/MeteoSt/SENSOR"
+    name: "Meteo_Station_Temperature_Humidity"
+    unit_of_measurement: "%"
+    value_template: "{{ value_json['BME280'].Humidity }}"
+
+  - platform: mqtt
+    state_topic: "tele/MeteoSt/SENSOR"
+    name: "Meteo_Station_Temperature_Pressure"
+    unit_of_measurement: "mmHg"
+    value_template: "{{ (value_json['BME280'].Pressure | float  * 0.75006375541921) | round(0) }}"
+
+
+# Show links to resources in log and frontend
+#introduction:
+
+# Enables the frontend
+frontend:
+  themes: !include themes.yaml
+
+# Enables configuration UI
+config:
+
+http:
+  # Secrets are defined in the file secrets.yaml
+  # api_password: !secret http_password
+  # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+  # base_url: example.duckdns.org:8123
+
+# Checks for available updates
+# Note: This component will send some information about your system to
+# the developers to assist with development of Home Assistant.
+# For more information, please see:
+# https://home-assistant.io/blog/2016/10/25/explaining-the-updater/
+updater:
+  # Optional, allows Home Assistant developers to focus on popular components.
+  # include_used_components: true
+
+# Discover some devices automatically
+discovery:
+
+# Allows you to issue voice commands from the frontend in enabled browsers
+conversation:
+
+# Enables support for tracking state changes over time
+history:
+
+# View all events in a logbook
+logbook:
+
+# Enables a map showing the location of tracked devices
+map:
+
+# Track the sun
+sun:
+
+
+# Text to speech
+tts:
+  - platform: google
+
+# Cloud
+cloud:
+
+
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+
+influxdb:
+  host: 127.0.0.1
+
+mqtt:
+  broker: 192.168.1.5
+  port: 1883
+  username: drden
+  password: QcKsc2991
+
+
+switch:
+  - platform: mqtt
+    name: Attic_light
+    state_topic: "stat/Attic/POWER"
+    command_topic: "cmnd/Attic/power"
+    payload_on: "ON"
+    payload_off: "OFF"
+
+  - platform: mqtt
+    name: Kitchen_Table_Lamp
+    state_topic: "stat/Kitchen/POWER"
+    command_topic: "cmnd/Kitchen/power"
+    payload_on: "ON"
+    payload_off: "OFF"
+
+  - platform: mqtt
+    name: Router_reboot
+    state_topic: "stat/Hall/POWER"
+    command_topic: "cmnd/Hall/power"
+    payload_on: "ON"
+    payload_off: "OFF"

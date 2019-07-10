@@ -1,0 +1,15 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: ha
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: ha.home.local
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: ha-home-assistant
+          servicePort: 8123
