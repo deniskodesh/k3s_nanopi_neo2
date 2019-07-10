@@ -184,7 +184,12 @@ sensor:
 1. Ingress controller
 ```ssh
 kubectl create -f https://raw.githubusercontent.com/deniskodesh/k3s_nanopi_neo2/master/ingress/ingress-mandatory.yaml
-2. Ingress rule for Home Assistant
+```
+2. Ingress service
+```ssh
+kubectl create -f https://raw.githubusercontent.com/deniskodesh/k3s_nanopi_neo2/master/ingress/ingress-service.yaml
+```
+3. Ingress rule for Home Assistant
 ```ssh
 kubectl create -f https://raw.githubusercontent.com/deniskodesh/k3s_nanopi_neo2/master/ingress/ingress-rule-ha.yaml
 ```
