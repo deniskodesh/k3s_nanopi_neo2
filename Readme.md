@@ -182,28 +182,13 @@ sensor:
 ## Ingress installation
 
 1. Ingress controller
-
-2. Ingress rule for Home Assistant
-
 ```ssh
-cat <<EOF | kubectl create -f -
-apiVersion: networking.k8s.io/v1beta1
-kind: Ingress
-metadata:
-  name: ha
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
-spec:
-  rules:
-  - http:
-  - host: ha.home.local
-      paths:
-      - path: /
-        backend:
-          serviceName: ha-home-assistant
-          servicePort: 80
-EOF
+kubectl create -f https://raw.githubusercontent.com/deniskodesh/k3s_nanopi_neo2/master/ingress/ingress-mandatory.yaml
+2. Ingress rule for Home Assistant
+```ssh
+kubectl create -f https://raw.githubusercontent.com/deniskodesh/k3s_nanopi_neo2/master/ingress/ingress-rule-ha.yaml
 ```
+
 
 ## MQTT installation
 
