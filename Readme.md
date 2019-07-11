@@ -72,8 +72,7 @@ k3s kubectl get node
 
 ### Save config 
   
-  1. On master node in home directory create .kube directory
-  2. Copy config file to .kube directory 
+  1. Copy config file to .kube directory 
 ```ssh 
 cp /etc/rancher/k3s/k3s.yaml ~/.kube/config
 ```
