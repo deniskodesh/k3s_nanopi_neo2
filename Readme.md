@@ -33,7 +33,7 @@ For more detailed information you can navigate on [link](https://dietpi.com/phpb
 1. Configure static IP for each node [link](https://dietpi.com/phpbb/viewtopic.php?f=8&t=14)
 2. Configure hostname. For example for master node 
 ```sh 
-echo master01 >/etc/hostname.
+echo master01 >/etc/hostname
 ```
 3. Conficure hosts file. For example for master node :
 ```sh 
