@@ -172,7 +172,8 @@ sensor:
     name: "meetup_temp"
     unit_of_measurement: "C"
     value_template: "{{ value_json['AM2301'].Temperature }}"
-      - platform: mqtt
+  
+  - platform: mqtt
     state_topic: "indoor/dist"
     name: "meetup_distance"
     unit_of_measurement: "cm"
@@ -200,7 +201,7 @@ kubectl create -f https://raw.githubusercontent.com/deniskodesh/k3s_nanopi_neo2/
 1. Install MQTT
 ```ssh
 kubectl run mqtt --image=eclipse-mosquitto:1.6.3 --port=1833
-kubectl expose deployment nginx --target-port=1883 --port=1883 --type=LoadBalancer
+kubectl expose deployment mqtt --target-port=1883 --port=1883 --type=LoadBalancer
 ```
 
 
