@@ -70,7 +70,7 @@ curl -sfL https://get.k3s.io |K3S_URL=https://MASTER_IP:6443 K3S_TOKEN=TOKEN sh 
 k3s kubectl get node
 ```
 
-### Save config 
+### Copy k3s config 
   
   1. Copy config file to .kube directory 
 ```ssh 
